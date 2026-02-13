@@ -1,0 +1,44 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: 채팅 목록
+        - button "새 대화" [ref=e6]:
+          - img
+          - generic [ref=e7]: 새 대화
+      - generic [ref=e49] [cursor=pointer]:
+        - img [ref=e50]
+        - textbox [active] [ref=e59]: 새 대화
+    - generic [ref=e13]:
+      - banner [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - button "사이드바 토글" [ref=e17]:
+              - img
+              - generic [ref=e18]: 사이드바 토글
+            - button "새 대화" [ref=e19]:
+              - img
+              - generic [ref=e20]: 새 대화
+            - generic [ref=e21]:
+              - img [ref=e22]
+              - heading "AI Chat" [level=1] [ref=e25]
+          - generic [ref=e26]:
+            - button [ref=e27]:
+              - img
+            - link "설정" [ref=e28] [cursor=pointer]:
+              - /url: /settings/mcp
+              - img
+              - generic [ref=e29]: 설정
+      - generic [ref=e30]:
+        - img [ref=e32]
+        - generic [ref=e34]:
+          - heading "대화를 시작하세요" [level=2] [ref=e35]
+          - paragraph [ref=e36]: 메시지를 입력하여 AI와 대화할 수 있습니다.
+      - generic [ref=e38]:
+        - textbox "메시지를 입력하세요... (Shift+Enter로 줄바꿈)" [ref=e39]
+        - button "전송" [disabled]:
+          - img
+          - generic: 전송
+  - button "Open Next.js Dev Tools" [ref=e45] [cursor=pointer]:
+    - img [ref=e46]
+  - alert [ref=e57]

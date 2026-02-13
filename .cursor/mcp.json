@@ -2,6 +2,9 @@
     "mcpServers": {
         "context7": {
             "url": "https://mcp.context7.com/mcp"
+        },
+        "supabase": {
+            "url": "https://mcp.supabase.com/mcp?project_ref=njfeyfjhlbstzqwlcmrj&features=docs%2Cdatabase%2Caccount%2Cdevelopment"
         }
     }
 }

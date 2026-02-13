@@ -1,9 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect, type KeyboardEvent } from "react";
-import { MessageSquarePlus, Trash2, Pencil, MessageSquare, Check, X } from "lucide-react";
+import { MessageSquarePlus, Trash2, Pencil, MessageSquare, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -94,8 +100,8 @@ export function ChatSidebar({
       </div>
 
       {/* Room list */}
-      <ScrollArea className="flex-1">
-        <div className="space-y-1 p-2">
+      <ScrollArea className="flex-1 min-w-0">
+        <div className="min-w-0 max-w-full space-y-1 p-2">
           {rooms.length === 0 && (
             <p className="text-muted-foreground px-2 py-6 text-center text-xs">
               대화가 없습니다.
@@ -105,7 +111,7 @@ export function ChatSidebar({
             <div
               key={room.id}
               className={cn(
-                "group flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm cursor-pointer transition-colors",
+                "group grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 rounded-lg px-2.5 py-2 text-sm cursor-pointer transition-colors",
                 room.id === activeRoomId
                   ? "bg-sidebar-accent text-sidebar-accent-foreground"
                   : "hover:bg-sidebar-accent/50"
@@ -120,7 +126,7 @@ export function ChatSidebar({
             >
               <MessageSquare className="text-muted-foreground size-4 shrink-0" />
 
-              <div className="min-w-0 flex-1">
+              <div className="min-w-0 overflow-hidden">
                 {editingId === room.id ? (
                   <div className="flex items-center gap-1">
                     <input
@@ -144,30 +150,35 @@ export function ChatSidebar({
               </div>
 
               {editingId !== room.id && (
-                <div className="flex shrink-0 gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      startEditing(room);
-                    }}
-                  >
-                    <Pencil className="size-3" />
-                    <span className="sr-only">이름 변경</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setDeleteTarget(room);
-                    }}
-                  >
-                    <Trash2 className="size-3.5" />
-                    <span className="sr-only">삭제</span>
-                  </Button>
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      className={cn(
+                        "shrink-0 transition-opacity",
+                        room.id === activeRoomId ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                      )}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <MoreVertical className="size-3.5" />
+                      <span className="sr-only">더보기</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" side="right" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenuItem onClick={() => startEditing(room)}>
+                      <Pencil className="size-3.5" />
+                      이름 변경
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      variant="destructive"
+                      onClick={() => setDeleteTarget(room)}
+                    >
+                      <Trash2 className="size-3.5" />
+                      삭제
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
             </div>
           ))}

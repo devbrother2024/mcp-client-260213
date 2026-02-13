@@ -2,11 +2,33 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 
+export type ToolCallStatus =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "executing"
+  | "completed"
+  | "error";
+
+export interface ToolCall {
+  id: string;
+  serverId: string;
+  serverName: string;
+  name: string;
+  args: Record<string, unknown>;
+  status: ToolCallStatus;
+  result?: unknown;
+  error?: string;
+  /** Gemini에 전달한 safe function name (히스토리 복원용, 내부 전용) */
+  _functionName?: string;
+}
+
 export interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  toolCalls?: ToolCall[];
 }
 
 const STORAGE_KEY = "chat_history";

@@ -10,9 +10,11 @@ import type { Message } from '@/hooks/use-chat'
 interface ChatMessagesProps {
     messages: Message[]
     isLoading: boolean
+    onApproveToolCall?: (messageId: string, toolCallId: string) => void
+    onRejectToolCall?: (messageId: string, toolCallId: string) => void
 }
 
-export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
+export function ChatMessages({ messages, isLoading, onApproveToolCall, onRejectToolCall }: ChatMessagesProps) {
     const bottomRef = useRef<HTMLDivElement>(null)
     const topSentinelRef = useRef<HTMLDivElement>(null)
     const scrollAreaRef = useRef<HTMLDivElement>(null)
@@ -62,7 +64,12 @@ export function ChatMessages({ messages, isLoading }: ChatMessagesProps) {
                     <div ref={topSentinelRef} />
 
                     {messages.map(message => (
-                        <ChatBubble key={message.id} message={message} />
+                        <ChatBubble
+                            key={message.id}
+                            message={message}
+                            onApproveToolCall={(tcId) => onApproveToolCall?.(message.id, tcId)}
+                            onRejectToolCall={(tcId) => onRejectToolCall?.(message.id, tcId)}
+                        />
                     ))}
 
                     {isLoading && (
